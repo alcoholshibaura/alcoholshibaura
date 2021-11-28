@@ -1,0 +1,54 @@
+# center CMake config file
+#
+# This file sets the following variables:
+# center_FOUND - Always TRUE.
+# center_INCLUDE_DIRS - Directories containing the center include files.
+# center_IDL_DIRS - Directories containing the center IDL files.
+# center_LIBRARIES - Libraries needed to use center.
+# center_DEFINITIONS - Compiler flags for center.
+# center_VERSION - The version of center found.
+# center_VERSION_MAJOR - The major version of center found.
+# center_VERSION_MINOR - The minor version of center found.
+# center_VERSION_REVISION - The revision version of center found.
+# center_VERSION_CANDIDATE - The candidate version of center found.
+
+message(STATUS "Found center-@PROJECT_VERSION@")
+set(center_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(center_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(center_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(center_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(center_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(center_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(center_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(center_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(center_VERSION @PROJECT_VERSION@)
+set(center_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(center_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(center_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(center_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
